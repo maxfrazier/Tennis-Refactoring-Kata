@@ -58,59 +58,101 @@ namespace Tennis
         /// <returns>The current score of the tennis game.</returns>
         public string GetScore()
         {
-            string score = "";
-            var tempScore = 0;
-            if (players.player1Score == players.player2Score)
+            switch (players.player1Score)
             {
-                switch (players.player1Score)
-                {
-                    case 0:
-                        score = "Love-All";
-                        break;
-                    case 1:
-                        score = "Fifteen-All";
-                        break;
-                    case 2:
-                        score = "Thirty-All";
-                        break;
-                    default:
-                        score = "Deuce";
-                        break;
-
-                }
-            }
-            else if (players.player1Score >= 4 || players.player2Score >= 4)
-            {
-                var difference = players.player1Score - players.player2Score;
-                if (difference == 1) score = "Advantage player1";
-                else if (difference == -1) score = "Advantage player2";
-                else if (difference >= 2) score = "Win for player1";
-                else score = "Win for player2";
-            }
-            else
-            {
-                for (var i = 1; i < 3; i++)
-                {
-                    if (i == 1) tempScore = players.player1Score;
-                    else { score += "-"; tempScore = players.player2Score; }
-                    switch (tempScore)
+                case 0:
+                    switch (players.player2Score)
                     {
                         case 0:
-                            score += "Love";
-                            break;
+                            return "Love-All";                                         //Player 1: 0 Player 2: 0
                         case 1:
-                            score += "Fifteen";
-                            break;
-                        case 2:
-                            score += "Thirty";
-                            break;
+                            return "Love-Fifteen";                                     //Player 1: 0 Player 2: 1
+                        case 2: 
+                            return "Love-Thirty";                                      //Player 1: 0 Player 2: 2
                         case 3:
-                            score += "Forty";
-                            break;
+                            return "Love-Forty";                                       //Player 1: 0 Player 2: 3
+                        default:
+                            return "Win for " + players.player2Name;                   //Player 1: 0 Player 2: >3                                                
+                    }                    
+                case 1:
+                    switch (players.player2Score)
+                    {
+                        case 0:
+                            return "Fifteen-Love";                                     //Player 1: 1 Player 2: 0
+                        case 1:
+                            return "Fifteen-All";                                      //Player 1: 1 Player 2: 1
+                        case 2:
+                            return "Fifteen-Thirty";                                   //Player 1: 1 Player 2: 2
+                        case 3:
+                            return "Fifteen-Forty";                                    //Player 1: 1 Player 2: 3
+                        default:
+                            return "Win for " + players.player2Name;                   //Player 1: 1 Player 2: >3                        
+                    }                    
+                case 2:
+                    switch (players.player2Score)
+                    {
+                        case 0:
+                            return "Thirty-Love";                                      //Player 1: 2 Player 2: 0
+                        case 1:
+                            return "Thirty-Fifteen";                                   //Player 1: 2 Player 2: 1
+                        case 2:
+                            return "Thirty-All";                                       //Player 1: 2 Player 2: 2
+                        case 3:
+                            return "Thirty-Forty";                                     //Player 1: 2 Player 2: 3
+                        default:                        
+                            return "Win for " + players.player2Name;                   //Player 1: 2 Player 2: >3                        
+                    }                    
+                case 3:
+                    switch (players.player2Score)
+                    {
+                        case 0:
+                            return "Forty-Love";                                       //Player 1: 3 Player 2: 0
+                        case 1:
+                            return "Forty-Fifteen";                                    //Player 1: 3 Player 2: 1
+                        case 2:
+                            return "Forty-Thirty";                                     //Player 1: 3 Player 2: 2
+                        case 3:
+                            return "Deuce";                                            //Player 1: 3 Player 2: 3
+                        case 4:
+                            return "Advantage " + players.player2Name;                 //Player 1: 3 Player 2: 4
+                        default:
+                            return "Win for " + players.player2Name;                   //Player 1: 3 Player 2: >4
+                    }                    
+                case 4:
+                    switch (players.player2Score)
+                    {                        
+                        case 0: case 1: case 2:
+                            return "Win for " + players.player1Name;                   //Player 1: 4 Player 2: 0/1/2
+                        case 3:
+                            return "Advantage " + players.player1Name;                 //Player 1: 4 Player 2: 3                        
+                        case 4:
+                            return "Deuce";                                            //Player 1: 4 Player 2: 4
+                        case 5:
+                            return "Advantage " + players.player2Name;                 //Player 1: 4 Player 2: 5
+                        default:
+                            return "Win for " + players.player2Name;                   //Player 1: 4 Player 2: >5
+                    }                                      
+                default:
+                    int difference = players.player1Score - players.player2Score;
+                    if(difference > 1) 
+                    {
+                        return "Win for " + players.player1Name;                       //Player 1 has at least 2 more points than player 2 and Player 1's score is higher than 4
+                    }                                                                  
+                    else if (difference < -1)
+                    {
+                        return "Win for " + players.player2Name;                       //Player 1 has scored 5 or more points but Player 2 has scored at least 2 more
                     }
-                }
+                    else if (difference == 1)
+                    {
+                        return "Advantage " + players.player1Name;                     //Player 1 has scored 5 or more points and Player 2 has scored 1 less than that
+                    }
+                    else if (difference == -1)
+                    {
+                        return "Advantage " + players.player2Name;                     //Player 1 has scored 5 or more points and Player 2 has scored 1 more than that
+                    }
+                    break;                    
             }
-            return score;
+            return "error";
         }
     }
 }
