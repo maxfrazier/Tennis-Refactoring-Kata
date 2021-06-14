@@ -30,15 +30,19 @@ namespace Tennis
 		[TestCase( 4,  2, "Win for player1")]
 		[TestCase( 2,  4, "Win for player2")]
 		[TestCase( 4,  3, "Advantage player1")]
+		[TestCase( 688,  687, "Advantage player1")]
 		[TestCase( 3,  4, "Advantage player2")]
 		[TestCase( 5,  4, "Advantage player1")]
 		[TestCase( 4,  5, "Advantage player2")]
 		[TestCase(15, 14, "Advantage player1")]
 		[TestCase(14, 15, "Advantage player2")]
 		[TestCase( 6,  4, "Win for player1")]
+		[TestCase( 16,  0, "Win for player1")]
 		[TestCase( 4,  6, "Win for player2")]
 		[TestCase(16, 14, "Win for player1")]
 		[TestCase(14, 16, "Win for player2")]
+		[TestCase(0, 16, "Win for player2")]
+		[TestCase(0, 4, "Win for player2")]
 		public void CheckTennisGame(int player1Score, int player2Score, string expectedScore)
 		{
 			var game = new TennisGame("player1", "player2");
